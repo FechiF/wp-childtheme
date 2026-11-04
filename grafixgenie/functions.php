@@ -104,3 +104,33 @@ function my_divi_add_viewport_meta() {
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
 }
 
+/* Simple Footer Menu */
+
+
+/**
+ * Add this shortcode to text module [footer_links menu="Name of menu"]
+ */
+
+function fpe_footer_links_shortcode($atts) {
+
+    $atts = shortcode_atts([
+        'menu'  => '',
+        'class' => 'footer-links',
+    ], $atts);
+
+    if (empty($atts['menu'])) {
+        return '';
+    }
+
+    return wp_nav_menu([
+        'menu'        => $atts['menu'],
+        'container'   => 'nav',
+        'container_class' => esc_attr($atts['class']),
+        'menu_class'  => 'footer-links-list',
+        'echo'        => false,
+        'fallback_cb' => false,
+        'depth'       => 3,
+    ]);
+}
+
+add_shortcode('footer_links', 'fpe_footer_links_shortcode');
